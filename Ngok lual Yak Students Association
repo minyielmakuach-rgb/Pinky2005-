@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ngok Lual Yak Students' Association at Universities and Higher Institutes -Official website</title>
+<meta name="description" content="Ngok Lual Yak Students' Association at Universities & Higher Institutes - Non-profit based in Juba. Education is Light.">
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage-compat.js"></script>
+<script>
+// ===== 1. PASTE YOUR FIREBASE CONFIG HERE (PUBLIC PART) =====
+const firebaseConfig = {
+  apiKey: "PASTE_HERE",
+  authDomain: "PASTE_HERE",
+  projectId: "PASTE_HERE",
+  storageBucket: "PASTE_HERE",
+  messagingSenderId: "PASTE_HERE",
+  appId: "PASTE_HERE"
+};
+firebase.initializeApp(firebaseConfig);
+</script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,sans-serif}
+:root{--blue:#1e3a8a;--red:#b91c1c;--light:#f8fafc}
+body{background:#fff;color:#1e293b;line-height:1.6}
+header{padding:12px 6%;display:flex;justify-content:space-between;align-items:center;background:#fff;border-bottom:3px solid var(--blue);position:sticky;top:0;z-index:100}
+.logo{display:flex;align-items:center;gap:10px;font-weight:900;color:var(--blue);cursor:pointer}
+.logo img{width:46px;height:46px;border-radius:50%;border:2px solid var(--blue)}
+nav a{margin-left:10px;text-decoration:none;color:#333;font-weight:600;font-size:12px}
+.hero{background:linear-gradient(135deg,#1e3a8a,#0f172a);color:#fff;padding:70px 6%;text-align:center}
+.hero img{width:130px;height:130px;border-radius:50%;border:5px solid #fff;background:#fff}
+.hero.motto{background:#fff;color:var(--blue);padding:6px 18px;border-radius:30px;font-weight:900;display:inline-block;margin:14px 0}
+.btn{display:inline-block;padding:11px 20px;border-radius:8px;font-weight:700;text-decoration:none;margin:5px;font-size:13px}
+.btn-white{background:#fff;color:var(--blue)}.btn-red{background:var(--red);color:#fff}
+.section{padding:45px 6%}.section h2{color:var(--blue);font-size:22px;border-left:6px solid var(--red);padding-left:12px;margin-bottom:18px}
+.card{background:var(--light);padding:18px;border-radius:14px;border:1px solid #e2e8f0;margin-top:12px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+.gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px}
+.gallery div{height:160px;background:#e2e8f0;border-radius:10px;display:flex;align-items:flex-end;justify-content:center;padding:6px;color:#666;border:2px solid #e2e8f0;background-size:cover;background-position:center}
+form input,form select{width:100%;padding:11px;margin:6px 0;border:1px solid #cbd5e1;border-radius:8px}
+form button{background:var(--blue);color:#fff;border:none;padding:13px;width:100%;border-radius:8px;font-weight:800;cursor:pointer}
+footer{background:#0f172a;color:#94a3b8;padding:25px 6%;text-align:center;font-size:12px}
+#adminPanel{display:none;position:fixed;inset:0;background:#0009;z-index:999;padding:20px;overflow:auto}
+#adminBox{background:#fff;max-width:500px;margin:40px auto;padding:20px;border-radius:16px}
+</style>
+</head>
+<body>
+
+<header><div class="logo" onclick="if(event.detail===3)showAdmin()"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj0pkxEIybhggHZwyO7AZ0vJ1dxCGA-VKrwBSa23Kv58sJKWRtUG-cDvnz36lVlKQINx2bwnWl_UgCnKkl-fRTXWkbEni1tLLnN_0uTJIH8e1ejfH7DkH3QJFEHr0ZKZ0RI3wfg4mVY8oXEJDJuMBoLQPI7w4JT97auzaJEFKk-cNnozg/s1600/file_00000000636481f489e6abf308bbeb38.png"> NLYSAUHI</div><nav><a href="#news">News</a><a href="#gallery">Gallery</a><a href="#about">About</a><a href="#join">Join</a></nav></header>
+
+<div class="hero">
+<img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj0pkxEIybhggHZwyO7AZ0vJ1dxCGA-VKrwBSa23Kv58sJKWRtUG-cDvnz36lVlKQINx2bwnWl_UgCnKkl-fRTXWkbEni1tLLnN_0uTJIH8e1ejfH7DkH3QJFEHr0ZKZ0RI3wfg4mVY8oXEJDJuMBoLQPI7w4JT97auzaJEFKk-cNnozg/s1600/file_00000000636481f489e6abf308bbeb38.png"><h1>NGOK LUAL YAK STUDENTS' ASSOCIATION<br>AT UNIVERSITIES & HIGHER INSTITUTES</h1>
+<div class="motto">EDUCATION IS LIGHT</div><p style="color:#cbd5e1">Non-profit • 3K Followers • Juba, South Sudan</p>
+<a href="#join" class="btn btn-white">Join Us</a><a href="#gallery" class="btn btn-red">View Photos</a>
+</div>
+
+<div class="section" id="about" style="background:#f1f5f9">
+<h2>About Us</h2>
+<div class="card" style="font-size:15px;line-height:1.7">
+<p><b>Ngok Lual Yak Students' Association at Universities & Higher Institutes (NLYSAUHI)</b> is a non-profit student organization based in Juba, South Sudan (Konyokonyo Market).</p><br>
+<p>We bring together all Ngok Lual Yak students across universities and higher institutes to promote unity, academic support, welfare assistance, and community development.</p><br><p><b>Our Motto is "Education is Light."</b></p>
+</div>
+</div>
+
+<div class="section" id="gallery"><h2>Gallery - Auto Updates</h2><div class="gallery" id="galleryGrid"><div>Loading photos...</div></div></div>
+
+<div class="section" id="join"><h2>Join Membership</h2><div class="card" style="max-width:600px;margin:auto"><form id="joinForm" action="https://formsubmit.co/Minyielmakuach@gmail.com" method="POST"><input type="hidden" name="_subject" value="New NLYSAUHI Member"><input type="hidden" name="_captcha" value="false"><label>Full Name</label><input name="Full Name" required><label>University</label><input name="University" required><label>Course</label><input name="Course" required><label>Phone</label><input name="Phone" type="tel" required><button type="submit">Submit Application</button></form></div></div>
+
+<div class="section" id="contact" style="background:#f1f5f9"><h2>Contact</h2><div class="card"><p>📍 Konyokonyo Market, Juba<br>📞 0921 300 670 / 0920 616 316<br>📧 Minyielmakuach@gmail.com<br>📘 Facebook: NLYSAUHI Page</p></div></div>
+
+<footer>© 2026 NLYSAUHI — Education is Light • Admin: Add?admin to URL</footer>
+
+<!-- HIDDEN ADMIN PANEL -->
+<div id="adminPanel"><div id="adminBox">
+<h2>Admin Login</h2>
+<div id="loginBox"><input id="email" placeholder="Admin Email"><input id="pass" type="password" placeholder="Password"><button onclick="adminLogin()" style="width:100%;padding:12px;background:#1e3a8a;color:#fff;border-radius:8px;font-weight:800;margin-top:8px">Login</button><button onclick="closeAdmin()" style="width:100%;padding:12px;background:#eee;border-radius:8px;margin-top:8px">Close</button></div>
+<div id="uploadBox" style="display:none"><h3>Upload New Photo</h3><input type="file" id="file" accept="image/*"><input id="caption" placeholder="Caption"><button onclick="uploadPhoto()" style="width:100%;padding:12px;background:#1e3a8a;color:#fff;border-radius:8px;font-weight:800;margin-top:8px">Upload to Website</button><p id="status" style="margin-top:10px"></p><button onclick="adminLogout()" style="width:100%;padding:12px;background:#b91c1c;color:#fff;border-radius:8px;margin-top:15px">Logout</button></div>
+</div></div>
+
+<script>
+const db=firebase.firestore(), storage=firebase.storage(), auth=firebase.auth();
+
+// PUBLIC GALLERY - Loads automatically
+db.collection('photos').orderBy('created','desc').onSnapshot(snap=>{
+  const g=document.getElementById('galleryGrid'); g.innerHTML='';
+  if(snap.empty){ g.innerHTML='<div>No photos yet. Admin can upload via?admin</div>'; return; }
+  snap.forEach(doc=>{
+    const p=doc.data();
+    g.innerHTML+=`<div style="background-image:url('${p.url}')"><span style="background:#000a;color:#fff;padding:3px 7px;border-radius:20px;font-size:11px">${p.caption||''}</span></div>`;
+  });
+});
+
+// ADMIN LOGIC - Only shows when?admin in URL or triple-click logo
+function showAdmin(){ document.getElementById('adminPanel').style.display='block'; }
+function closeAdmin(){ document.getElementById('adminPanel').style.display='none'; history.replaceState({},'',location.pathname); }
+if(location.search.includes('admin')) showAdmin();
+
+function adminLogin(){ auth.signInWithEmailAndPassword(email.value,pass.value).then(()=>{loginBox.style.display='none';uploadBox.style.display='block';}).catch(e=>alert(e.message)) }
+function adminLogout(){ auth.signOut().then(()=>location.reload()) }
+auth.onAuthStateChanged(u=>{ if(u){loginBox.style.display='none';uploadBox.style.display='block'; showAdmin();}});
+
+async function uploadPhoto(){
+  const f=file.files[0]; if(!f) return alert('Choose photo');
+  status.innerText='Uploading...';
+  const ref=storage.ref('gallery/'+Date.now()+'_'+f.name);
+  await ref.put(f);
+  const url=await ref.getDownloadURL();
+  await db.collection('photos').add({url,caption:caption.value||'NLYSAUHI',created:Date.now()});
+  status.innerText='✅ Photo is now LIVE on website!'; file.value=''; caption.value='';
+}
+</script>
+</body>
+</html>
